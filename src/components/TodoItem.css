@@ -7,6 +7,7 @@
   border-radius: 5px;
 }
 .item__title {
+  text-align: center;
   margin: 0;
   padding: 0;
   font-size: 25px;
@@ -15,6 +16,7 @@
   margin-bottom: 15px;
 }
 .item__description {
+  text-align: center;
   margin: 0;
   padding: 0;
   font-size: 15px;
