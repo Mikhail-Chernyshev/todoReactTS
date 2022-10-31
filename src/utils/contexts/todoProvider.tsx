@@ -23,15 +23,10 @@ const DEFAULT_TODO_LIST = [
 export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
   // const [todos, setTodos] = React.useState(DEFAULT_TODO_LIST);
   const [todos, setTodos] = React.useState(() => {
-    // get the todos from localstorage
     const savedTodos = localStorage.getItem("todos");
-    // if there are todos stored
     if (savedTodos) {
-      // return the parsed JSON object back to a javascript object
       return JSON.parse(savedTodos);
-      // otherwise
     } else {
-      // return an empty array
       return [];
     }
   });
