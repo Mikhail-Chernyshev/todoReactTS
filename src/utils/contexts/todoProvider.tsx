@@ -1,4 +1,5 @@
 import React from 'react';
+import ts from 'typescript';
 import { todoContext } from './todoContext';
 type Todo = {
   id: number;
@@ -20,8 +21,31 @@ const DEFAULT_TODO_LIST = [
   },
 ];
 export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
-  const [todos, setTodos] = React.useState(DEFAULT_TODO_LIST);
+  // const [todos, setTodos] = React.useState(DEFAULT_TODO_LIST);
+  const [todos, setTodos] = React.useState(() => {
+    // get the todos from localstorage
+    const savedTodos = localStorage.getItem("todos");
+    // if there are todos stored
+    if (savedTodos) {
+      // return the parsed JSON object back to a javascript object
+      return JSON.parse(savedTodos);
+      // otherwise
+    } else {
+      // return an empty array
+      return [];
+    }
+  });
   const [todoIdEdit, setTodoIdEdit] = React.useState<Todo['id'] | null>(null);
+  React.useEffect(() => {
+    const todos = JSON.parse(localStorage.getItem('todos') || '{}');
+    if (todos) {
+      setTodos(todos);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
   const selectTodoForEdit = (id: Todo['id']) => {
     setTodoIdEdit(id);
