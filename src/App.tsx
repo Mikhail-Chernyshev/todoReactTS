@@ -2,6 +2,7 @@ import React from 'react';
 import { TodoComment } from 'typescript';
 import './App.css';
 import Header from './components/Header';
+import TodoList from './components/TodoList';
 import TodoPanel from './components/TodoPanel';
 
 export type Todo = {
@@ -30,11 +31,25 @@ function App() {
       { id: todos[todos.length - 1].id + 1, description, name, checked: false },
     ]);
   };
+  const checkTodo = (id: Todo['id']) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, checked: !todo.checked };
+        }
+        return todo;
+      })
+    );
+  };
+  const deleteTodo = (id: Todo['id']) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
   return (
     <div className='main'>
       <div className='todo'>
         <Header todoCount={todos.length} />
         <TodoPanel addTodo={addTodo} />
+        <TodoList todos={todos} checkTodo={checkTodo} deleteTodo={deleteTodo} />
       </div>
     </div>
   );
